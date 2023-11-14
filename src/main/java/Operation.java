@@ -1,2 +1,5 @@
-package PACKAGE_NAME;public enum Operation {
+public enum Operation {
+    DEPOSIT,
+    WITHDRAW,
+    BET
 }
