@@ -3,10 +3,7 @@ import java.io.InputStream;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Scanner;
-import java.util.UUID;
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
@@ -96,6 +93,9 @@ public class Main {
         }
 
         //results
+        legitimatePlayers.sort(Comparator.comparing(Player::getPlayerId));
+        illegitimatePlayers.sort(Comparator.comparing(Player::getPlayerId));
+
         long casinoBalanceChange = 0;
 
         try {
