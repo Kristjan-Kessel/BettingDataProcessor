@@ -26,7 +26,7 @@ public class Player {
         this.balance += amount;
     }
 
-    public BigDecimal getWinrate(){
+    public BigDecimal getWinRate(){
         if(betCount == 0){
             return BigDecimal.valueOf(0,2);
         }

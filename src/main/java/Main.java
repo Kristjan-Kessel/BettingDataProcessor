@@ -1,7 +1,6 @@
-import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 
@@ -55,39 +54,32 @@ public class Main {
             }
 
             switch (operation) {
-                case DEPOSIT:
-                    player.addBalance(amount);
-                    break;
-                case WITHDRAW:
-
-                    if(player.getBalance()<amount){
+                case DEPOSIT -> player.addBalance(amount);
+                case WITHDRAW -> {
+                    if (player.getBalance() < amount) {
                         illegitimatePlayers.add(player);
                         legitimatePlayers.remove(player);
                         player.setIllegalOperation(line);
                         break;
                     }
-
                     player.addBalance(-amount);
-                    break;
-                case BET:
+                }
+                case BET -> {
                     UUID matchId = UUID.fromString(parts[2]);
-
-                    if(player.getBalance()<amount){
+                    if (player.getBalance() < amount) {
                         illegitimatePlayers.add(player);
                         legitimatePlayers.remove(player);
                         player.setIllegalOperation(line);
                         break;
                     }
-
                     Character side = parts[4].charAt(0);
                     Match match = matches.get(matchId);
-                    if(match == null){
-                        System.out.println("Match: ["+matchId+"] not found");
+                    if (match == null) {
+                        System.out.println("Match: [" + matchId + "] not found");
                         break;
                     }
-
                     player.bet(amount, match, side);
-                    break;
+                }
             }
 
         }
@@ -100,13 +92,13 @@ public class Main {
 
         try {
             String path = System.getProperty("user.dir") + "/src/main/java/";
-            PrintWriter writer = new PrintWriter(path+"results.txt", "UTF-8");
+            PrintWriter writer = new PrintWriter(path+"results.txt", StandardCharsets.UTF_8);
 
             if(legitimatePlayers.isEmpty()){
                 writer.println("");
             }else{
                 for (Player player : legitimatePlayers) {
-                    writer.println(player.getPlayerId() + " " + player.getBalance() + " " + player.getWinrate());
+                    writer.println(player.getPlayerId() + " " + player.getBalance() + " " + player.getWinRate());
                     casinoBalanceChange -= player.getTotalWinnings();
                 }
             }
@@ -124,7 +116,7 @@ public class Main {
             writer.println(casinoBalanceChange);
 
             writer.close();
-        } catch (FileNotFoundException | UnsupportedEncodingException e) {
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
