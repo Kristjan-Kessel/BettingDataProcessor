@@ -9,6 +9,7 @@ public class Player {
     private long totalWinnings = 0;
 
     private String illegalOperation = "";
+    private boolean isLegit = true;
 
     public Player(UUID playerId) {
         this.playerId = playerId;
@@ -26,6 +27,10 @@ public class Player {
         this.balance += amount;
     }
 
+    public boolean isLegit() {
+        return isLegit;
+    }
+
     public BigDecimal getWinRate(){
         if(betCount == 0){
             return BigDecimal.valueOf(0,2);
@@ -35,6 +40,7 @@ public class Player {
     }
 
     public void setIllegalOperation(String illegalOperation) {
+        isLegit = false;
         this.illegalOperation = illegalOperation;
     }
 
